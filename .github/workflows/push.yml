@@ -22,11 +22,11 @@ jobs:
           yarn build
 
       - name: Add .nojekkyll
-        run: touch ./public/.nojekyll
+        run: touch ./dist/.nojekyll
 
       - name: Deploy website
         uses: peaceiris/actions-gh-pages@v2.3.0
         env:
           ACTIONS_DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           PUBLISH_BRANCH: master
-          PUBLISH_DIR: ./public
+          PUBLISH_DIR: ./dist
