@@ -23,11 +23,11 @@ export default {
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['@/assets/scss/main.scss'],
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: [],
+  plugins: ['~plugins/serie-filters.js', '~plugins/link-filters.js'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -40,15 +40,20 @@ export default {
    */
   modules: [
     // Doc: https://buefy.github.io/#/documentation
-    'nuxt-buefy',
+    ['nuxt-buefy', { css: false }],
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/style-resources',
+    '@nuxtjs/proxy',
+    '@nuxtjs/markdownit'
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    proxy: true
+  },
   /*
    ** Build configuration
    */
@@ -56,6 +61,33 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      config.module.rules.push({
+        test: /\.vue$/,
+        loader: 'vue-svg-inline-loader'
+      })
+    }
+  },
+  /*
+   ** Style resources.
+   */
+  styleResources: {
+    scss: ['~assets/scss/_variables.scss']
+  },
+  /*
+   ** Router configuration
+   */
+  router: {
+    middleware: ['navbar']
+  },
+  /*
+   ** Proxy configuration
+   */
+  proxy: ['https://brmdb.github.io/brmdb-data/**/*.json'],
+  /*
+   ** MarkdownIt configuration
+   */
+  markdownit: {
+    injected: true
   }
 }

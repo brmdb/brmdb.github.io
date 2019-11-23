@@ -38,9 +38,16 @@ import Card from '~/components/Card'
 
 export default {
   name: 'HomePage',
-
   components: {
     Card
+  },
+  meta: {
+    navbar: {
+      color: 'is-white',
+      transparent: false,
+      spaced: true,
+      fixed: false
+    }
   }
 }
 </script>
