@@ -5,7 +5,7 @@ node_js:
   - "12"
 deploy:
   provider: script
-  script: yarn && yarn deploy
+  script: yarn run deploy
   skip_cleanup: true
   on:
     branch: master
