@@ -2,7 +2,7 @@ name: Build and deploy the website
 on:
   push:
     branches:
-      - site-source
+      - 'site-source'
 
 jobs:
   deploy:
