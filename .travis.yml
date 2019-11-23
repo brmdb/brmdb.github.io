@@ -1,11 +1,15 @@
 language: node_js
 before_script:
-  - yarn global add nuxt gh-pages
+  - yarn global add nuxt
 node_js:
   - "12"
+script: yarn deploy
 deploy:
-  provider: script
-  script: yarn run deploy
+  provider: pages
   skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: dist/
+  target_branch: master
   on:
-    branch: master
+    branch: site-source
