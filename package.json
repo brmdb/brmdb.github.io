@@ -10,7 +10,8 @@
     "start": "nuxt start",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "deploy": "nuxt generate && gh-pages -d dist -r https://$GH_TOKEN@github.com/brmdb/brmdb.github.io.git"
+    "deploy": "nuxt generate && gh-pages -d dist -r https://$GH_TOKEN@github.com/brmdb/brmdb.github.io.git",
+    "test": "echo 'Test'"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
