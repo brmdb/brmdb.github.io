@@ -1,0 +1,11 @@
+language: node_js
+before_script:
+  - yarn global add nuxt gh-pages
+node_js:
+  - "12"
+deploy:
+  provider: script
+  script: yarn && yarn deploy
+  skip_cleanup: true
+  on:
+    branch: master
