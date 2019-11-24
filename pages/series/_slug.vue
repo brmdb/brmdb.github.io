@@ -10,7 +10,10 @@
       <aside>
         <serie-info :serie="serie" :serie-header-ref="serieHeader" />
       </aside>
-      <serie-editions :serie="serie" v-if="activeTab === 'EDITIONS'" />
+      <transition name="fade" mode="out-in">
+        <serie-editions :serie="serie" v-if="activeTab === 'EDITIONS'" />
+        <serie-people :serie="serie" v-if="activeTab === 'PEOPLE'" />
+      </transition>
     </div>
   </div>
 </template>
@@ -20,13 +23,15 @@ import Banner from '~/components/Banner'
 import SerieHeader from '~/components/serie/SerieHeader'
 import SerieInfo from '~/components/serie/SerieInfo'
 import SerieEditions from '~/components/serie/SerieEditions'
+import SeriePeople from '~/components/serie/SeriePeople'
 
 export default {
   components: {
     Banner,
     SerieHeader,
     SerieInfo,
-    SerieEditions
+    SerieEditions,
+    SeriePeople
   },
   data() {
     return {

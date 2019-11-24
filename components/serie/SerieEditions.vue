@@ -75,7 +75,6 @@ export default {
       grid-row: 1 / 3;
       display: inline-grid;
       grid-row-gap: 1.75rem;
-      align-content: space-between;
     }
 
     .edition-empty {

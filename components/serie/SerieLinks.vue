@@ -5,6 +5,7 @@
       :key="link.url"
       :href="link.url"
       :class="link.name | link_color"
+      :title="link.name"
       rel="nofollow"
       target="_blank"
       class="button is-white"

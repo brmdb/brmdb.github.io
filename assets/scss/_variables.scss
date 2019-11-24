@@ -39,4 +39,8 @@ $family-sans-serif: 'Inter', 'Avenir', Helvetica, Arian, sans-serif;
 
 @import '~bulma/sass/utilities/derived-variables';
 
+$footer-background-color: $dark;
+$footer-color: findColorInvert($dark);
+$footer-padding: 1.5rem 2rem;
+
 $colors: map-merge($colors, $add-colors);

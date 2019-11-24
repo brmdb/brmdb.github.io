@@ -63,10 +63,7 @@ export default {
   },
   data() {
     return {
-      items: [
-        { text: 'Séries', to: '/series' },
-        { text: 'Editoras', to: '/publishers' }
-      ]
+      items: [{ text: 'Busca', to: '/browse' }]
     }
   }
 }

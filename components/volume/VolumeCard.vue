@@ -1,6 +1,11 @@
 <template>
   <div class="volume-card">
-    <img :src="volume.coverUrl" alt="" />
+    <img v-if="volume.coverUrl" :src="volume.coverUrl" alt="Capa do volume" />
+    <div v-else class="volume-cover-placeholder">
+      <span class="icon is-medium">
+        <b-icon icon="book" size="is-medium" />
+      </span>
+    </div>
     <div class="volume-card-body">
       <span class="volume-number">
         {{ volumeNumber }}
@@ -10,6 +15,9 @@
       </h3>
       <span class="volume-price">
         {{ volumePrice }}
+      </span>
+      <span class="volume-date">
+        {{ volumeDate }}
       </span>
       <span v-if="volume.isbn || volume.issn" class="volume-code" title="ISBN">
         {{ volumeCode }}
@@ -39,6 +47,11 @@ export default {
         currency: 'BRL'
       })
     },
+    volumeDate() {
+      return new Date(this.volume.releaseDate).toLocaleString('pt-BR', {
+        dateStyle: 'short'
+      })
+    },
     volumeCode() {
       return (this.volume.isbn || this.volume.issn).replace(
         /(\d{3})(\d{2})(\d{3})(\d{4})(\d)/,
@@ -64,28 +77,39 @@ export default {
     object-fit: cover;
   }
 
+  .volume-cover-placeholder {
+    background-color: $grey-lighter;
+    color: findColorInvert($grey-lighter);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .volume-card-body {
     padding: 10px;
     display: inline-grid;
-    grid-template-rows: min-content auto min-content min-content;
+    grid-template-rows: min-content auto min-content min-content min-content;
   }
 
   .volume-number,
-  .volume-code {
+  .volume-code,
+  .volume-date {
     font-size: 0.8rem;
     color: $grey;
   }
 
   .volume-name {
     font-weight: 500;
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .volume-price {
     font-size: 0.9rem;
   }
 
-  .volume-code {
+  .volume-code,
+  .volume-date {
     font-feature-settings: 'tnum' 1;
   }
 }

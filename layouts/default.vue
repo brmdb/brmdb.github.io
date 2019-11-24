@@ -10,14 +10,18 @@
     <section class="main-content">
       <nuxt />
     </section>
+
+    <app-footer />
   </div>
 </template>
 
 <script>
+import AppFooter from '~/components/AppFooter'
 import AppNavbar from '~/components/AppNavbar'
 
 export default {
   components: {
+    AppFooter,
     AppNavbar
   },
   head() {

@@ -65,7 +65,7 @@ export default {
       tabActive: 'EDITIONS',
       tabs: [
         { text: 'Edições', name: 'EDITIONS' },
-        { text: 'Pessoas', name: 'PEOPLE' }
+        { text: 'Criadores', name: 'PEOPLE' }
       ]
     }
   },
