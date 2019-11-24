@@ -1,7 +1,7 @@
 <template>
   <section
     :style="{
-      background: `url('${imageUrl}') center center`,
+      background: `url('${url}') center center`,
       backgroundSize: 'cover'
     }"
     class="hero is-medium is-dark is-cover"
@@ -16,6 +16,13 @@ export default {
     imageUrl: {
       type: String,
       required: true
+    }
+  },
+  computed: {
+    url() {
+      return this.imageUrl.length
+        ? this.imageUrl
+        : require('~/assets/default_banner.jpg')
     }
   }
 }

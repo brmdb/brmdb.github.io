@@ -1,11 +1,16 @@
 <template>
   <div>
-    <banner :image-url="serie.coverUrl" />
-    <serie-header :serie="serie" @tab-changed="onTabChanged" />
+    <banner :image-url="serie.bannerUrl" />
+    <serie-header
+      ref="serieHeader"
+      :serie="serie"
+      @tab-changed="onTabChanged"
+    />
     <div class="serie-container container">
       <aside>
-        <serie-info :serie="serie" />
+        <serie-info :serie="serie" :serie-header-ref="serieHeader" />
       </aside>
+      <serie-editions :serie="serie" v-if="activeTab === 'EDITIONS'" />
     </div>
   </div>
 </template>
@@ -14,25 +19,36 @@
 import Banner from '~/components/Banner'
 import SerieHeader from '~/components/serie/SerieHeader'
 import SerieInfo from '~/components/serie/SerieInfo'
+import SerieEditions from '~/components/serie/SerieEditions'
 
 export default {
   components: {
     Banner,
     SerieHeader,
-    SerieInfo
+    SerieInfo,
+    SerieEditions
   },
-  async asyncData({ $axios, params, error }) {
-    try {
-      return {
-        serie: await $axios.$get(`/brmdb-data/series/slug/${params.slug}.json`)
-      }
-    } catch (e) {
-      error({ statusCode: 404, message: 'Série não encontrada.' })
+  data() {
+    return {
+      activeTab: 'EDITIONS',
+      serieHeader: {}
     }
+  },
+  async asyncData({ $axios, params, error, store }) {
+    try {
+      return { serie: await $axios.$get(`/api/series/slug/${params.slug}`) }
+    } catch (e) {
+      store.commit('navbar/SET_TRANSPARENT', false)
+      store.commit('navbar/SET_FIXED', false)
+      error({ statusCode: 404, message: 'Série não encontrada' })
+    }
+  },
+  mounted() {
+    this.serieHeader = this.$refs.serieHeader
   },
   methods: {
     onTabChanged(activeTab) {
-      // TODO
+      this.activeTab = activeTab
     }
   },
   validate({ params }) {

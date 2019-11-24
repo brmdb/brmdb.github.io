@@ -14,12 +14,24 @@ $myanimelist-invert: findColorInvert($myanimelist);
 $kitsu: #fd755c;
 $kitsu-invert: findColorInvert($kitsu);
 
+$gdc: #006cb6;
+$gdc-invert: findColorInvert($gdc);
+
+$bbm: #39657d;
+$bbm-invert: findColorInvert($bbm);
+
+$catalogue: $grey-dark;
+$catalogue-invert: findColorInvert($catalogue);
+
 $twitter: #1da1f2;
 $twitter-invert: findColorInvert($twitter);
 
 $add-colors: (
   "myanimelist": ($myanimelist, $myanimelist-invert),
   "kitsu": ($kitsu, $kitsu-invert),
+  "gdc": ($gdc, $gdc-invert),
+  "bbm": ($bbm, $bbm-invert),
+  "catalogue": ($catalogue, $catalogue-invert),
   "twitter": ($twitter, $twitter-invert)
 );
 

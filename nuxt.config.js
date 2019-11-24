@@ -27,7 +27,11 @@ export default {
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~plugins/serie-filters.js', '~plugins/link-filters.js'],
+  plugins: [
+    '~plugins/serie-filters.js',
+    '~plugins/link-filters.js',
+    '~plugins/edition-filters.js'
+  ],
   /*
    ** Nuxt.js dev-modules
    */
@@ -83,7 +87,13 @@ export default {
   /*
    ** Proxy configuration
    */
-  proxy: ['https://brmdb.github.io/brmdb-data/**/*.json'],
+  proxy: {
+    '/api/**': {
+      target: 'https://brmdb-data.netlify.com',
+      pathRewrite: { '^/api': '' }
+    },
+    '/**/*.json': 'https://brmdb-data.netlify.com'
+  },
   /*
    ** MarkdownIt configuration
    */
