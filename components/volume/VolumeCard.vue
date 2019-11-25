@@ -70,9 +70,14 @@ export default {
   display: inline-grid;
   grid-template-columns: 125px auto;
   overflow: hidden;
+  color: $text;
 
   @include touch {
-    grid-template-columns: 0.55fr 1fr;
+    grid-template-columns: 130px 1fr;
+  }
+
+  &.has-shadow {
+    box-shadow: 0 2px 20px rgba($dark, 0.2);
   }
 
   img {

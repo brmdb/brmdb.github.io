@@ -40,6 +40,10 @@ export default {
   display: inline-grid;
   grid-template-rows: auto min-content;
 
+  &.is-full-height {
+    height: 100%;
+  }
+
   img {
     width: 100%;
     height: 100%;

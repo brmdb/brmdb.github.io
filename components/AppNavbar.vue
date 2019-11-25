@@ -5,6 +5,9 @@
       'is-spaced': spaced,
       'is-fixed-top': fixed,
       'is-transparent-dark': isTransparent,
+      'is-menu-showing': menuShowing,
+      'is-showing': showing,
+      'is-in-top': currScrollPos < 100,
       [color]: true
     }"
     class="navbar header"
@@ -33,6 +36,7 @@
             v-for="item in items"
             :key="item.to"
             :to="item.to"
+            :exact="item.exact"
             active-class="is-active"
             class="navbar-item"
           >
@@ -70,16 +74,22 @@ export default {
   },
   data() {
     return {
-      items: [{ text: 'Explorar', to: '/browse' }],
+      items: [
+        { text: 'Explorar', to: '/browse' },
+        { text: 'Checklists', to: '/checklists' }
+      ],
       currScrollPos: 0,
       prevScrollPos: 0
     }
   },
   computed: {
     isTransparent() {
-      return this.$store.state.navbar.transparent && this.currScrollPos < 200
+      return this.$store.state.navbar.transparent && this.currScrollPos < 100
     },
-    ...mapState({ menuShowing: (state) => state.navbar.menuShowing })
+    ...mapState({
+      menuShowing: (state) => state.navbar.menuShowing,
+      showing: (state) => state.navbar.showing
+    })
   },
   beforeMount() {
     this.prevScrollPos = window.pageYOffset
@@ -95,7 +105,10 @@ export default {
       const navbar = document.getElementById('navbar')
 
       if (this.$store.state.navbar.fixed) {
-        if (this.prevScrollPos > this.currScrollPos) {
+        if (this.prevScrollPos === this.currScrollPos) {
+          navbar.style.transform = 'translateY(0)'
+          this.$store.commit('navbar/SET_SHOWING', true)
+        } else if (this.prevScrollPos > this.currScrollPos) {
           navbar.style.transform = 'translateY(0)'
           this.$store.commit('navbar/SET_SHOWING', true)
         } else {
@@ -117,6 +130,38 @@ export default {
   transition: background 0.8s ease 0s, top 0.5s ease 0s, transform 0.5s ease 0s,
     padding 0.5s ease 0s;
   border-top: 3px solid $primary;
+
+  &.is-index {
+    background-color: transparent !important;
+
+    .navbar-item {
+      &:hover svg {
+        fill: lighten($primary, 13%) !important;
+      }
+
+      svg {
+        fill: lighten($primary, 8%) !important;
+      }
+    }
+
+    &.is-menu-showing {
+      transition: background 0.2s ease 0s, top 0.5s ease 0s,
+        transform 0.5s ease 0s, padding 0.5s ease 0s;
+      background-color: $dark !important;
+    }
+
+    &.is-showing {
+      background-color: $dark !important;
+    }
+
+    &.is-in-top {
+      background-color: transparent !important;
+    }
+
+    .navbar-burger {
+      color: rgba($light, 0.6);
+    }
+  }
 
   &.is-primary {
     border-top-color: darken($primary, 5%);

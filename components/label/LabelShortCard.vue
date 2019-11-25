@@ -36,6 +36,10 @@ export default {
   align-items: center;
   grid-column-gap: 8px;
 
+  &.has-shadow {
+    box-shadow: 0 2px 20px rgba($dark, 0.2);
+  }
+
   .label-logo {
     width: 3rem;
     height: 3rem;
@@ -53,6 +57,8 @@ export default {
     font-weight: 500;
     font-size: 0.9rem;
     width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .label-publisher {

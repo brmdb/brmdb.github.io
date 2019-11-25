@@ -1,6 +1,8 @@
 <template>
   <div>
     <app-navbar
+      v-if="!isIndex"
+      :class="{ 'is-index': isIndex }"
       :color="$store.state.navbar.color"
       :spaced="$store.state.navbar.spaced"
       :fixed="$store.state.navbar.fixed"
@@ -23,6 +25,11 @@ export default {
   components: {
     AppFooter,
     AppNavbar
+  },
+  computed: {
+    isIndex() {
+      return this.$nuxt.$route.name === 'index'
+    }
   },
   head() {
     return {
