@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   mode: 'spa',
   /*
@@ -48,7 +50,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
-    // '@nuxtjs/proxy',
+    '@nuxtjs/proxy',
     '@nuxtjs/markdownit'
   ],
   /*
@@ -56,9 +58,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    // proxy: true
-    host: 'brmdb-data.netlify.com',
-    port: 80
+    proxy: !process.env.API_URL
   },
   /*
    ** Build configuration
@@ -90,10 +90,7 @@ export default {
    ** Proxy configuration
    */
   proxy: {
-    // '/api/**/*.json': {
-    //   target: 'https://brmdb-data.netlify.com',
-    //   pathRewrite: { '^/api': '' }
-    // }
+    '**/*.json': 'https://brmdb-data.netlify.com'
   },
   /*
    ** MarkdownIt configuration
@@ -104,5 +101,17 @@ export default {
   /*
    ** PageTransition configuration
    */
-  pageTransition: 'fade'
+  pageTransition: 'fade',
+  /*
+   ** Generate configuration
+   */
+  generate: {
+    async routes() {
+      const res = await axios.get(
+        'https://brmdb-data.netlify.com/series/list.json'
+      )
+
+      return res.data.map((serie) => `/series/${serie.slug}`)
+    }
+  }
 }

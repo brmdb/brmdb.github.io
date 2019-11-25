@@ -47,8 +47,8 @@ export default {
   async asyncData({ $axios, params, error, store }) {
     try {
       return {
-        recentSeries: await $axios.$get('/series/recent'),
-        searchSeries: await $axios.$get('/series/search')
+        recentSeries: await $axios.$get('series/recent.json'),
+        searchSeries: await $axios.$get('series/list.json')
       }
     } catch (e) {
       store.commit('navbar/SET_TRANSPARENT', false)
@@ -80,6 +80,11 @@ export default {
     navbar: {
       color: 'is-primary',
       transparent: false
+    }
+  },
+  head() {
+    return {
+      title: 'Explorar | BrMDb'
     }
   }
 }
