@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   props: {
     color: {
@@ -70,14 +72,14 @@ export default {
     return {
       items: [{ text: 'Explorar', to: '/browse' }],
       currScrollPos: 0,
-      prevScrollPos: 0,
-      menuShowing: false
+      prevScrollPos: 0
     }
   },
   computed: {
     isTransparent() {
       return this.$store.state.navbar.transparent && this.currScrollPos < 200
-    }
+    },
+    ...mapState({ menuShowing: (state) => state.navbar.menuShowing })
   },
   beforeMount() {
     this.prevScrollPos = window.pageYOffset
@@ -104,7 +106,7 @@ export default {
       }
     },
     toggleMenu() {
-      this.menuShowing = !this.menuShowing
+      this.$store.commit('navbar/SET_MENU_SHOWING', !this.menuShowing)
     }
   }
 }

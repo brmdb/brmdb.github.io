@@ -45,15 +45,11 @@ export default {
     showPagination() {
       const { search, type } = this.filterOptions
       if (!search && !type) return false
-      return (
-        this.seriesToShow.length > this.perPage &&
-        (search.length || type !== 'ALL')
-      )
+      return this.seriesToShow.length > this.perPage
     },
     seriesInPage() {
       const { search, type } = this.filterOptions
       if (!search && !type) return this.recentSeries
-      if (!search.length && type === 'ALL') return this.recentSeries
       const initialIndex = (this.currentPage - 1) * this.perPage
       const endIndex =
         initialIndex + this.perPage < this.seriesToShow.length
@@ -64,13 +60,18 @@ export default {
     seriesToShow() {
       const { search, type } = this.filterOptions
       if (!search && !type) return this.recentSeries
-      if (!search.length && type === 'ALL') return this.recentSeries
+      if (!search.length && type === 'ALL') return this.searchSeries
       if (!search.length) {
         return this.searchSeries.filter((s) => s.type === type)
       }
 
       const searchRegex = new RegExp(this.filterOptions.search, 'gi')
       return this.searchSeries.filter((s) => this.selectSerie(s, searchRegex))
+    }
+  },
+  watch: {
+    currentPage() {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   },
   async asyncData({ $axios, params, error, store }) {
@@ -131,12 +132,21 @@ export default {
   grid-template-rows: min-content min-content;
   grid-column-gap: 40px;
   padding-top: 50px;
+
+  @include touch {
+    display: block;
+  }
 }
 
 .results-column {
   display: inline-grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 1.75rem;
+
+  @include touch {
+    grid-template-columns: 1fr 1fr;
+    padding-top: 2rem;
+  }
 }
 
 .recent-added {
@@ -144,9 +154,17 @@ export default {
   font-size: 1.15rem;
   grid-column: span 5;
   grid-row: 1;
+
+  @include touch {
+    grid-column: span 2;
+  }
 }
 
 .pagination {
   grid-column: span 5;
+
+  @include touch {
+    grid-column: span 2;
+  }
 }
 </style>

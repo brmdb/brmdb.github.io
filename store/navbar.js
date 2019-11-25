@@ -3,7 +3,8 @@ export const state = () => ({
   transparent: true,
   spaced: false,
   fixed: true,
-  showing: true
+  showing: true,
+  menuShowing: false
 })
 
 export const mutations = {
@@ -22,5 +23,8 @@ export const mutations = {
   },
   SET_SHOWING(state, showing) {
     state.showing = showing
+  },
+  SET_MENU_SHOWING(state, menuShowing) {
+    state.menuShowing = menuShowing
   }
 }

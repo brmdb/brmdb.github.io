@@ -32,4 +32,7 @@ export default ({ route, store }) => {
     true
   )
   store.commit('navbar/SET_TRANSPARENT', transparent)
+
+  // Always hide mobile menu when page changes.
+  store.commit('navbar/SET_MENU_SHOWING', false)
 }
