@@ -171,7 +171,7 @@ footer.footer {
           padding-right: 1.5rem;
           padding-left: 1.5rem;
 
-          *:nth-child(1) {
+          .volume-poster-card {
             width: 180px;
             height: 260px;
             margin-right: 1.5rem;
