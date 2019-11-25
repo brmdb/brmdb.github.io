@@ -41,12 +41,14 @@ export default {
   components: {
     Card
   },
+  mounted() {
+    this.$store.commit('navbar/SET_FIXED', false)
+  },
   meta: {
     navbar: {
       color: 'is-white',
       transparent: false,
-      spaced: true,
-      fixed: false
+      spaced: true
     }
   }
 }

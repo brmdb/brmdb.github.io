@@ -1,10 +1,10 @@
 <template>
   <nav
+    id="navbar"
     :class="{
       'is-spaced': spaced,
       'is-fixed-top': fixed,
-      'has-shadow': !transparent,
-      'is-transparent-dark': transparent,
+      'is-transparent-dark': isTransparent,
       [color]: true
     }"
     class="navbar header"
@@ -29,6 +29,7 @@
             v-for="item in items"
             :key="item.to"
             :to="item.to"
+            active-class="is-active"
             class="navbar-item"
           >
             {{ item.text }}
@@ -63,7 +64,37 @@ export default {
   },
   data() {
     return {
-      items: [{ text: 'Busca', to: '/browse' }]
+      items: [{ text: 'Explorar', to: '/browse' }],
+      currScrollPos: 0,
+      prevScrollPos: 0
+    }
+  },
+  computed: {
+    isTransparent() {
+      return this.$store.state.navbar.transparent && this.currScrollPos < 100
+    }
+  },
+  beforeMount() {
+    this.prevScrollPos = window.pageYOffset
+    this.currScrollPos = this.prevScrollPos
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll() {
+      this.currScrollPos = window.pageYOffset
+      const navbar = document.getElementById('navbar')
+
+      if (this.$store.state.navbar.fixed) {
+        if (this.prevScrollPos > this.currScrollPos) {
+          navbar.style.transform = 'translateY(0)'
+        } else {
+          navbar.style.transform = `translateY(-${navbar.clientHeight + 3}px)`
+        }
+        this.prevScrollPos = this.currScrollPos
+      }
     }
   }
 }
@@ -71,14 +102,20 @@ export default {
 
 <style lang="scss" scoped>
 .navbar {
-  transition: background 0.8s ease 0s, top 0.5s ease 0s;
+  transition: background 0.8s ease 0s, top 0.5s ease 0s, transform 0.5s ease 0s,
+    padding 0.5s ease 0s;
+  border-top: 3px solid $primary;
+
+  &.is-primary {
+    border-top-color: darken($primary, 5%);
+  }
 
   &.is-white .navbar-item svg {
     fill: $primary;
   }
 
   &.is-transparent-dark {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
 
     &:hover {
       background-color: $dark;

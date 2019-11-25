@@ -22,17 +22,6 @@ export default ({ route, store }) => {
   )
   store.commit('navbar/SET_SPACED', spaced)
 
-  const fixed = route.meta.reduce(
-    (fixed, meta) =>
-      meta.navbar
-        ? meta.navbar.fixed !== undefined
-          ? meta.navbar.fixed
-          : fixed
-        : fixed,
-    true
-  )
-  store.commit('navbar/SET_FIXED', fixed)
-
   const transparent = route.meta.reduce(
     (transparent, meta) =>
       meta.navbar

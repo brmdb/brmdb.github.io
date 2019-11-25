@@ -41,7 +41,9 @@ export default {
   },
   async asyncData({ $axios, params, error, store }) {
     try {
-      return { serie: await $axios.$get(`/api/series/slug/${params.slug}`) }
+      return {
+        serie: await $axios.$get(`/api/series/slug/${params.slug}.json`)
+      }
     } catch (e) {
       store.commit('navbar/SET_TRANSPARENT', false)
       store.commit('navbar/SET_FIXED', false)
@@ -50,6 +52,7 @@ export default {
   },
   mounted() {
     this.serieHeader = this.$refs.serieHeader
+    this.$store.commit('navbar/SET_FIXED', true)
   },
   methods: {
     onTabChanged(activeTab) {
@@ -63,7 +66,7 @@ export default {
     navbar: {
       color: 'is-dark',
       transparent: true,
-      fixed: true
+      spaced: false
     }
   },
   head() {

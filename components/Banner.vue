@@ -1,11 +1,5 @@
 <template>
-  <section
-    :style="{
-      background: `url('${url}') center center`,
-      backgroundSize: 'cover'
-    }"
-    class="hero is-medium is-dark is-cover"
-  >
+  <section :style="{ background }" class="hero is-medium is-dark is-cover">
     <div class="overlay"></div>
   </section>
 </template>
@@ -18,11 +12,23 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      loaded: false
+    }
+  },
   computed: {
-    url() {
-      return this.imageUrl.length
-        ? this.imageUrl
-        : require('~/assets/default_banner.jpg')
+    background() {
+      return this.imageUrl.length && this.loaded
+        ? `url(${this.imageUrl}) center center / cover`
+        : undefined
+    }
+  },
+  mounted() {
+    if (this.imageUrl.length) {
+      const img = new Image()
+      img.onload = () => (this.loaded = true)
+      img.src = this.imageUrl
     }
   }
 }
@@ -31,6 +37,8 @@ export default {
 <style lang="scss" scoped>
 .hero {
   position: relative;
+  background: url('~assets/default_banner.jpg') center center / cover;
+  transition: background-image 0.8s ease;
 
   &.is-cover {
     height: 40vh;

@@ -5,7 +5,7 @@
       :key="edition.id"
       class="serie-edition"
     >
-      <h1 class="edition-name">{{ edition.name }}</h1>
+      <h2 class="edition-name">{{ edition.name }}</h2>
       <div class="edition-container">
         <volume-card
           v-for="volume in edition.volumes"
@@ -57,7 +57,7 @@ export default {
   .serie-edition {
     margin-bottom: 1.75rem;
 
-    h1.edition-name {
+    .edition-name {
       font-weight: 500;
       margin-bottom: 8px;
       font-size: 1.15rem;

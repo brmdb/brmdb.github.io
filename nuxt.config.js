@@ -19,7 +19,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: '#fff' },
+  loading: { color: '#fff', height: '3px' },
   /*
    ** Global CSS
    */
@@ -88,16 +88,19 @@ export default {
    ** Proxy configuration
    */
   proxy: {
-    '/api/**': {
+    '/api/**/*.json': {
       target: 'https://brmdb-data.netlify.com',
       pathRewrite: { '^/api': '' }
-    },
-    '/**/*.json': 'https://brmdb-data.netlify.com'
+    }
   },
   /*
    ** MarkdownIt configuration
    */
   markdownit: {
     injected: true
-  }
+  },
+  /*
+   ** PageTransition configuration
+   */
+  pageTransition: 'fade'
 }

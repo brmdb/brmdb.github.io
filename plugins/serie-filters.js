@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 const typeMapping = {
+  ALL: 'Qualquer',
   MANGA: 'Mangá',
   MANHWA: 'Manhwa',
   MANHUA: 'Manhua',
