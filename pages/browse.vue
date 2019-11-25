@@ -7,9 +7,17 @@
           Recentemente adicionados
         </h2>
         <serie-poster-card
-          v-for="(serie, i) in seriesToShow"
+          v-for="(serie, i) in seriesInPage"
           :key="i"
           :serie="serie"
+        />
+        <b-pagination
+          v-if="showPagination"
+          :total="seriesToShow.length"
+          :current.sync="currentPage"
+          :per-page="perPage"
+          order="is-centered"
+          rounded
         />
       </div>
     </div>
@@ -28,10 +36,31 @@ export default {
   data() {
     return {
       filterOptions: {},
-      hasSearched: false
+      hasSearched: false,
+      currentPage: 1,
+      perPage: 20
     }
   },
   computed: {
+    showPagination() {
+      const { search, type } = this.filterOptions
+      if (!search && !type) return false
+      return (
+        this.seriesToShow.length > this.perPage &&
+        (search.length || type !== 'ALL')
+      )
+    },
+    seriesInPage() {
+      const { search, type } = this.filterOptions
+      if (!search && !type) return this.recentSeries
+      if (!search.length && type === 'ALL') return this.recentSeries
+      const initialIndex = (this.currentPage - 1) * this.perPage
+      const endIndex =
+        initialIndex + this.perPage < this.seriesToShow.length
+          ? initialIndex + this.perPage
+          : undefined
+      return this.seriesToShow.slice(initialIndex, endIndex)
+    },
     seriesToShow() {
       const { search, type } = this.filterOptions
       if (!search && !type) return this.recentSeries
@@ -74,6 +103,7 @@ export default {
     onFilterChanged(filterOptions) {
       this.hasSearched = true
       this.filterOptions = Object.assign({}, this.filterOptions, filterOptions)
+      this.currentPage = 1
     }
   },
   meta: {
@@ -109,5 +139,9 @@ export default {
   font-size: 1.15rem;
   grid-column: span 5;
   grid-row: 1;
+}
+
+.pagination {
+  grid-column: span 5;
 }
 </style>
