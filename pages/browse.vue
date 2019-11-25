@@ -104,6 +104,10 @@ export default {
       this.hasSearched = true
       this.filterOptions = Object.assign({}, this.filterOptions, filterOptions)
       this.currentPage = 1
+
+      if (filterOptions.method === 'TYPE_CHANGED') {
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+      }
     }
   },
   meta: {
@@ -124,6 +128,7 @@ export default {
 .search-page {
   display: grid;
   grid-template-columns: 200px auto;
+  grid-template-rows: min-content min-content;
   grid-column-gap: 40px;
   padding-top: 50px;
 }

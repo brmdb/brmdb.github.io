@@ -20,7 +20,7 @@
           v-html="$md.render(serie.synopsis)"
           :style="{ height: showLongText ? `${textHeight}px` : '150px' }"
           class="content"
-        ></div>
+        />
         <span
           v-if="textIsLong && !showLongText"
           @click="showLongText = !showLongText"
@@ -32,7 +32,10 @@
           <a
             v-for="tab in tabs"
             :key="tab.name"
-            :class="{ 'is-active': tabActive === tab.name }"
+            :class="{
+              'is-active': tabActive === tab.name,
+              [tab.name.toLowerCase()]: true
+            }"
             @click="toggleActiveTab(tab.name)"
             class="header-navbar-item"
           >
@@ -65,6 +68,7 @@ export default {
       tabActive: 'EDITIONS',
       tabs: [
         { text: 'Edições', name: 'EDITIONS' },
+        { text: 'Sinopse', name: 'DESCRIPTION' },
         { text: 'Criadores', name: 'PEOPLE' }
       ]
     }
@@ -92,12 +96,32 @@ export default {
     display: grid;
     grid-column-gap: 30px;
     grid-template-columns: 215px auto;
-    min-height: 250px;
+
+    @include touch {
+      grid-template-columns: 1fr;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
   }
 
   .cover-container {
     position: relative;
     margin-top: -125px;
+
+    @include touch {
+      margin-top: -110px;
+      height: fit-content;
+    }
+
+    .cover-inner {
+      @include touch {
+        display: inline-grid;
+        grid-template-columns: 100px auto;
+        grid-gap: 20px;
+        align-items: flex-end;
+        width: 100%;
+      }
+    }
 
     .serie-cover {
       background-color: rgba(212, 230, 245, 0.5);
@@ -107,6 +131,10 @@ export default {
       width: 100%;
       border-style: none;
       vertical-align: text-top;
+
+      @include touch {
+        max-width: 100px;
+      }
     }
   }
 
@@ -116,14 +144,14 @@ export default {
     padding-top: 25px;
     min-height: 0px;
 
-    &.has-banner {
-      min-height: 250px;
-    }
-
     h1.title {
       font-size: 1.4rem;
       font-weight: 400;
       margin-bottom: 0;
+
+      @include touch {
+        font-size: 1.1rem;
+      }
     }
 
     .content {
@@ -133,6 +161,10 @@ export default {
       height: 150px;
       overflow-y: hidden;
       transition: height 0.2s ease-out;
+
+      @include touch {
+        display: none;
+      }
     }
 
     .synopsis-length-toggle {
@@ -151,6 +183,10 @@ export default {
       &:hover {
         color: $grey-dark;
       }
+
+      @include touch {
+        display: none;
+      }
     }
   }
 
@@ -163,10 +199,25 @@ export default {
     width: 100%;
     font-size: 0.85rem;
 
+    @include touch {
+      overflow-x: auto;
+      white-space: nowrap;
+      width: auto;
+      justify-self: unset;
+      justify-content: unset;
+      -webkit-overflow-scrolling: touch;
+    }
+
     .header-navbar-item {
       padding: 15px;
       color: lighten($grey, 10%);
       transition: 0.15s;
+
+      @include desktop {
+        &.description {
+          display: none;
+        }
+      }
 
       &.is-active {
         color: $grey-darker;

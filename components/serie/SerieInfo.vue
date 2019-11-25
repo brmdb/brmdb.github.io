@@ -1,6 +1,9 @@
 <template>
   <div class="info-data-container">
-    <div v-if="serie.alternativeTitles.length" class="info-data">
+    <div
+      v-if="serie.alternativeTitles.length"
+      class="info-data alternative-titles"
+    >
       <div class="info-data-header">Nomes alternativos</div>
       <div
         v-for="title in serie.alternativeTitles"
@@ -43,3 +46,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.alternative-titles {
+  @include touch {
+    display: none;
+  }
+}
+</style>

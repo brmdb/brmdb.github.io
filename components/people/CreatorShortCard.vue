@@ -41,6 +41,11 @@ export default {
   grid-template-columns: 100px auto;
   overflow: hidden;
 
+  @include touch {
+    height: 75px;
+    grid-template-columns: 75px auto;
+  }
+
   img {
     width: 100%;
     height: 100%;

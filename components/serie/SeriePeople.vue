@@ -27,7 +27,14 @@ export default {
 <style lang="scss" scoped>
 .serie-people {
   display: inline-grid;
-  grid-gap: 1.75rem;
+  grid-column-gap: 1.75rem;
+  grid-row-gap: 1.75rem;
   grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+
+  @include touch {
+    grid-template-columns: 1fr;
+    grid-row-gap: 1rem;
+  }
 }
 </style>

@@ -62,4 +62,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.info-data-container {
+  margin-bottom: 0;
+}
+</style>

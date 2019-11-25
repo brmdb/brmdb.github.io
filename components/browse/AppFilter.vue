@@ -1,5 +1,5 @@
 <template>
-  <aside class="filter">
+  <aside :class="{ 'has-navbar-showing': navbarShowing }" class="filter">
     <div class="field">
       <p class="control has-icons-left">
         <input
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import debounce from 'lodash.debounce'
 
 export default {
@@ -50,13 +51,18 @@ export default {
       ]
     }
   },
+  computed: mapState({ navbarShowing: (state) => state.navbar.showing }),
   methods: {
     changeType(type) {
       this.type = type
-      this.emitSearch()
+      this.emitSearch('TYPE_CHANGED')
     },
-    emitSearch() {
-      this.$emit('filter', { search: this.searchValue, type: this.type })
+    emitSearch(type = 'SEARCH_CHANGED') {
+      this.$emit('filter', {
+        search: this.searchValue,
+        type: this.type,
+        method: type
+      })
     },
     onSearchInput() {
       debounce(this.emitSearch, 500)()
@@ -66,6 +72,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.filter {
+  position: sticky;
+  top: 50px;
+  height: fit-content;
+  transition: top 0.5s ease 0s;
+
+  &.has-navbar-showing {
+    top: 100px;
+  }
+}
+
 .menu {
   margin-top: 1.25rem;
 

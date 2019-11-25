@@ -38,3 +38,12 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.links {
+  @include touch {
+    width: 100%;
+    margin-bottom: 0;
+  }
+}
+</style>

@@ -42,6 +42,10 @@ export default {
 
   &.is-cover {
     height: 40vh;
+
+    @include touch {
+      height: 230px;
+    }
   }
 
   .overlay {

@@ -17,13 +17,17 @@
           <img svg-inline src="~/assets/logo.svg" alt="BrMDb" height="20" />
         </nuxt-link>
 
-        <div class="navbar-burger">
+        <div
+          @click="toggleMenu"
+          :class="{ 'is-active': menuShowing }"
+          class="navbar-burger"
+        >
           <span />
           <span />
           <span />
         </div>
       </div>
-      <div class="navbar-menu">
+      <div :class="{ 'is-active': menuShowing }" class="navbar-menu">
         <div class="navbar-start">
           <nuxt-link
             v-for="item in items"
@@ -66,12 +70,13 @@ export default {
     return {
       items: [{ text: 'Explorar', to: '/browse' }],
       currScrollPos: 0,
-      prevScrollPos: 0
+      prevScrollPos: 0,
+      menuShowing: false
     }
   },
   computed: {
     isTransparent() {
-      return this.$store.state.navbar.transparent && this.currScrollPos < 100
+      return this.$store.state.navbar.transparent && this.currScrollPos < 200
     }
   },
   beforeMount() {
@@ -90,11 +95,16 @@ export default {
       if (this.$store.state.navbar.fixed) {
         if (this.prevScrollPos > this.currScrollPos) {
           navbar.style.transform = 'translateY(0)'
+          this.$store.commit('navbar/SET_SHOWING', true)
         } else {
           navbar.style.transform = `translateY(-${navbar.clientHeight + 3}px)`
+          this.$store.commit('navbar/SET_SHOWING', false)
         }
         this.prevScrollPos = this.currScrollPos
       }
+    },
+    toggleMenu() {
+      this.menuShowing = !this.menuShowing
     }
   }
 }

@@ -12,6 +12,14 @@
       </aside>
       <transition name="fade" mode="out-in">
         <serie-editions :serie="serie" v-if="activeTab === 'EDITIONS'" />
+        <div v-if="activeTab === 'DESCRIPTION'" class="description-mobile">
+          <h2>Sinopse</h2>
+          <div
+            ref="synopsis"
+            v-html="$md.render(serie.synopsis)"
+            class="content"
+          />
+        </div>
         <serie-people :serie="serie" v-if="activeTab === 'PEOPLE'" />
       </transition>
     </div>
@@ -84,5 +92,25 @@ export default {
   grid-template-columns: 215px auto;
   margin-top: 30px;
   position: relative;
+
+  @include touch {
+    display: block;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}
+
+.description-mobile {
+  h2 {
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+
+  .content {
+    background-color: $white;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    padding: 20px;
+  }
 }
 </style>

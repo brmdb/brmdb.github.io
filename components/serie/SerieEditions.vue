@@ -59,8 +59,12 @@ export default {
 
     .edition-name {
       font-weight: 500;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       font-size: 1.15rem;
+
+      @include touch {
+        font-size: 1rem;
+      }
     }
 
     .edition-container {
@@ -68,6 +72,11 @@ export default {
       grid-column-gap: 1.75rem;
       grid-row-gap: 1.75rem;
       grid-template-columns: 1fr 1fr 1fr;
+
+      @include touch {
+        grid-template-columns: 1fr;
+        grid-row-gap: 1rem;
+      }
     }
 
     .edition-info-container {
@@ -75,6 +84,12 @@ export default {
       grid-row: 1 / 3;
       display: inline-grid;
       grid-row-gap: 1.75rem;
+
+      @include touch {
+        grid-column: 1;
+        grid-row: 1;
+        grid-row-gap: 1rem;
+      }
     }
 
     .edition-empty {
@@ -85,6 +100,12 @@ export default {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
+      @include touch {
+        grid-row: 2;
+        grid-column: 1;
+        height: 150px;
+      }
 
       p {
         display: block;
