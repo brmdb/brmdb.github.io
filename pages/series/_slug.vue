@@ -42,7 +42,7 @@ export default {
   async asyncData({ $axios, params, error, store }) {
     try {
       return {
-        serie: await $axios.$get(`/api/series/slug/${params.slug}.json`)
+        serie: await $axios.$get(`/series/slug/${params.slug}`)
       }
     } catch (e) {
       store.commit('navbar/SET_TRANSPARENT', false)

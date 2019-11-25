@@ -48,7 +48,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
-    '@nuxtjs/proxy',
+    // '@nuxtjs/proxy',
     '@nuxtjs/markdownit'
   ],
   /*
@@ -56,7 +56,9 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    proxy: true
+    // proxy: true
+    host: 'brmdb-data.netlify.com',
+    port: 80
   },
   /*
    ** Build configuration
@@ -88,10 +90,10 @@ export default {
    ** Proxy configuration
    */
   proxy: {
-    '/api/**/*.json': {
-      target: 'https://brmdb-data.netlify.com',
-      pathRewrite: { '^/api': '' }
-    }
+    // '/api/**/*.json': {
+    //   target: 'https://brmdb-data.netlify.com',
+    //   pathRewrite: { '^/api': '' }
+    // }
   },
   /*
    ** MarkdownIt configuration
