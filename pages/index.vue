@@ -27,17 +27,47 @@
               Explore seus mangás favoritos
             </h2>
             <p class="subtitle is-6">
-              Saiba quando novos volumes irão sair
+              Também encontre derivados como <em>light novels</em>.
             </p>
           </div>
           <div class="right-side">
             <div class="cards-container">
-              <serie-poster-card :serie="serie" class="is-full-height" />
-              <volume-card
+              <serie-poster-card
+                v-for="s in lastFiveRecent"
+                :key="s.id"
+                :serie="s"
+                class="is-full-height"
+              />
+              <!-- <volume-card
                 :volume="serie.editions[0].volumes[0]"
                 class="has-shadow"
+              /> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="hero is-light is-divided">
+      <div class="hero-body is-props-2">
+        <div class="container">
+          <div class="left-side">
+            <div class="cards-container">
+              <volume-card
+                v-for="v in volumes"
+                :key="v.id"
+                :volume="v"
+                class="has-shadow"
+                show-serie-title
               />
             </div>
+          </div>
+          <div class="right-side">
+            <h2 class="title is-4">
+              Se informe sobre os volumes
+            </h2>
+            <p class="subtitle is-6">
+              Saiba a data de lançamento e se houve aumento dos preços.
+            </p>
           </div>
         </div>
       </div>
@@ -64,11 +94,22 @@ import VolumeCard from '~/components/volume/VolumeCard'
 
 export default {
   components: { AppNavbar, SeriePosterCard, VolumeCard },
+  computed: {
+    lastFiveRecent() {
+      return this.recent.slice(0, 5)
+    },
+    volumes() {
+      return this.serie.editions[0].volumes
+        .slice(0, 2)
+        .map((v) => ({ ...v, edition: { serie: { title: this.serie.title } } }))
+    }
+  },
   async asyncData({ $axios, error }) {
     try {
       return {
+        recent: await $axios.$get('series/recent.json'),
         serie: await $axios.$get(
-          'series/slug/battle-angel-alita-last-order.json'
+          'series/slug/wotakoi-o-amor-e-dificil-para-otakus.json'
         )
       }
     } catch (e) {
@@ -125,7 +166,7 @@ footer.footer {
 .hero.is-divided .hero-body {
   .container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: auto auto;
     align-items: center;
     justify-items: center;
 
@@ -142,10 +183,16 @@ footer.footer {
     .right-side {
       .cards-container {
         display: inline-grid;
-        grid-template-columns: 210px auto;
+        grid-template-columns: repeat(3, 210px);
         grid-template-rows: 300px;
         grid-gap: 1.75rem;
         align-items: center;
+
+        @include desktop {
+          .volume-poster-card:nth-child(n + 4) {
+            display: none;
+          }
+        }
       }
     }
 
@@ -172,9 +219,61 @@ footer.footer {
           padding-left: 1.5rem;
 
           .volume-poster-card {
-            width: 180px;
-            height: 260px;
+            width: 210px;
+            height: 300px;
             margin-right: 1.5rem;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &.is-props-2 {
+    .left-side {
+      .cards-container {
+        display: inline-grid;
+        grid-template-columns: 280px 280px;
+        grid-gap: 1.75rem;
+        align-items: center;
+      }
+    }
+
+    @include touch {
+      padding-right: 0;
+      padding-left: 0;
+
+      .right-side {
+        width: 100%;
+        grid-row: 1;
+        padding-right: 1.5rem;
+        padding-left: 1.5rem;
+        padding-bottom: 2rem;
+      }
+
+      .left-side {
+        width: 100%;
+        grid-row: 2;
+        -webkit-overflow-scrolling: touch;
+        overflow-x: auto;
+        white-space: nowrap;
+
+        .cards-container {
+          display: inline-flex;
+          padding-right: 1.5rem;
+          padding-left: 1.5rem;
+
+          .volume-card {
+            /* width: 210px;
+            height: 300px; */
+            margin-right: 1.5rem;
+
+            &:last-child {
+              margin-right: 0;
+            }
           }
         }
       }

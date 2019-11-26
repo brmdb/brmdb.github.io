@@ -7,6 +7,7 @@
       'is-transparent-dark': isTransparent,
       'is-menu-showing': menuShowing,
       'is-showing': showing,
+      'is-hiding': !showing,
       'is-in-top': currScrollPos < 100,
       [color]: true
     }"
@@ -103,6 +104,7 @@ export default {
     handleScroll() {
       this.currScrollPos = window.pageYOffset
       const navbar = document.getElementById('navbar')
+      this.$store.commit('navbar/SET_MENU_SHOWING', false)
 
       if (this.$store.state.navbar.fixed) {
         if (this.prevScrollPos === this.currScrollPos) {
@@ -132,15 +134,15 @@ export default {
   border-top: 3px solid $primary;
 
   &.is-index {
-    background-color: transparent !important;
+    background-color: transparent;
 
     .navbar-item {
       &:hover svg {
-        fill: lighten($primary, 13%) !important;
+        fill: lighten($primary, 13%);
       }
 
       svg {
-        fill: lighten($primary, 8%) !important;
+        fill: lighten($primary, 8%);
       }
     }
 
@@ -150,12 +152,13 @@ export default {
       background-color: $dark !important;
     }
 
+    &.is-hiding,
     &.is-showing {
-      background-color: $dark !important;
+      background-color: $dark;
     }
 
     &.is-in-top {
-      background-color: transparent !important;
+      background-color: transparent;
     }
 
     .navbar-burger {

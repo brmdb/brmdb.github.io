@@ -51,7 +51,8 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/style-resources',
     '@nuxtjs/proxy',
-    '@nuxtjs/markdownit'
+    '@nuxtjs/markdownit',
+    '@nuxtjs/google-analytics'
   ],
   /*
    ** Axios module configuration
@@ -113,5 +114,11 @@ export default {
 
       return res.data.map((serie) => `/series/${serie.slug}`)
     }
+  },
+  /*
+   ** Google Analytics setup.
+   */
+  googleAnalytics: {
+    id: 'UA-117196425-2'
   }
 }

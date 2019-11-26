@@ -11,7 +11,7 @@
         {{ volumeNumber }}
       </span>
       <h3 class="volume-name">
-        {{ volume.name }}
+        {{ name }}
       </h3>
       <span class="volume-price">
         {{ volumePrice }}
@@ -29,12 +29,21 @@
 <script>
 export default {
   props: {
+    showSerieTitle: {
+      type: Boolean,
+      default: false
+    },
     volume: {
       type: Object,
       required: true
     }
   },
   computed: {
+    name() {
+      return this.showSerieTitle
+        ? this.volume.edition.serie.title
+        : this.volume.name
+    },
     volumeNumber() {
       if (this.volume.number === 'U') return 'Vol. único'
       if (!isNaN(parseInt(this.volume.number)))

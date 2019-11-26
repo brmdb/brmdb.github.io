@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="default-layout">
     <app-navbar
       v-if="!isIndex"
       :class="{ 'is-index': isIndex }"
@@ -38,3 +38,15 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.default-layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+}
+</style>
